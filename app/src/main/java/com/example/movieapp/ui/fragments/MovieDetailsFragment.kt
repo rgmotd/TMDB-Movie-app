@@ -1,6 +1,7 @@
 package com.example.movieapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,7 @@ import com.example.movieapp.data.Constants.GENRE_MAP
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.ui.adapters.CastAdapter
 import com.example.movieapp.ui.adapters.GenreAdapter
-import com.example.movieapp.ui.viewmodels.CastViewModel
+import com.example.movieapp.ui.viewmodels.MovieDetailsViewModel
 import com.example.movieapp.ui.viewmodels.CastViewModelAssistedFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,12 +25,13 @@ class MovieDetailsFragment : Fragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
     lateinit var castAdapter: CastAdapter
+    lateinit var genreAdapter: GenreAdapter
     private val args: MovieDetailsFragmentArgs by navArgs()
 
     @Inject
     lateinit var castFactory: CastViewModelAssistedFactory
 
-    val viewModel: CastViewModel by viewModels { CastViewModel.Factory(castFactory, args.movie.id) }
+    val movieDetailsViewModel: MovieDetailsViewModel by viewModels { MovieDetailsViewModel.Factory(castFactory, args.id) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,29 +46,43 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupAdapters()
 
-        viewModel.movieCast.observe(viewLifecycleOwner) {
+
+        movieDetailsViewModel.movieCast.observe(viewLifecycleOwner) {
             castAdapter.items = it.cast
         }
 
+        movieDetailsViewModel.movie.observe(viewLifecycleOwner) { movie ->
+            Log.d("MovieDetailsFragment", "onViewCreated: $movie")
+            Glide.with(binding.root)
+                .load("https://image.tmdb.org/t/p/original" + movie.backdrop_path)
+                .placeholder(R.color.colorPrimaryVariant)
+                .into(binding.ivHeader)
+            binding.apply {
+                tvRating.text = movie.vote_average.toString()
+                tvTitle.text = movie.title
+                tvStoryText.text = movie.overview
+            }
 
-        Glide.with(binding.root).load("https://image.tmdb.org/t/p/original" + args.movie.backdrop_path)
-            .placeholder(R.color.colorPrimaryVariant)
-            .into(binding.ivHeader)
-        binding.apply {
-            tvRating.text = args.movie.vote_average.toString()
-            tvTitle.text = args.movie.title
-            tvStoryText.text = args.movie.overview
+            binding.ivSave.setImageResource(if (movie.is_saved) R.drawable.saved else R.drawable.not_saved)
+            binding.ivSave.setOnClickListener {
+                binding.ivSave.setImageResource(if (movie.is_saved) R.drawable.not_saved else R.drawable.saved)
+                movie.is_saved = !movie.is_saved
+                movieDetailsViewModel.insert(movie)
+            }
+
+            genreAdapter.items = getGenres(movie.genre_ids)
         }
     }
 
     private fun setupAdapters() {
-        val genreAdapter = GenreAdapter()
+        genreAdapter = GenreAdapter()
         castAdapter = CastAdapter()
-        genreAdapter.items = getGenres(args.movie.genre_ids)
         binding.rvGenres.adapter = genreAdapter
         binding.rvCast.adapter = castAdapter
-        binding.rvGenres.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvCast.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvGenres.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCast.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun getGenres(list: List<Int>): List<String> {
@@ -76,6 +92,7 @@ class MovieDetailsFragment : Fragment() {
         }
         return genres
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

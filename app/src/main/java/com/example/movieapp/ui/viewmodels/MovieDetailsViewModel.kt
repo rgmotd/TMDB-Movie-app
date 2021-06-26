@@ -6,9 +6,11 @@ import com.example.movieapp.data.cast.CastResponse
 import com.example.movieapp.data.repository.MovieRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class CastViewModel @AssistedInject constructor(
+class MovieDetailsViewModel @AssistedInject constructor(
     private val repository: MovieRepository,
     @Assisted private val movieId: Int
 ) : ViewModel() {
@@ -36,7 +38,13 @@ class CastViewModel @AssistedInject constructor(
         _movieCast.postValue(repository.getMovieCast(movieId).body())
     }
 
-    fun getMovie() = viewModelScope.launch {
-        _movie.postValue(repository.getMovie(movieId))
+    fun getMovie() = viewModelScope.launch(Dispatchers.IO) {
+        repository.getMovie(movieId).collect {
+            _movie.postValue(it)
+        }
+    }
+
+    fun insert(result: Result) = viewModelScope.launch {
+        repository.insert(result)
     }
 }

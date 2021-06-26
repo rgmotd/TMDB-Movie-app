@@ -1,9 +1,7 @@
 package com.example.movieapp.ui.viewmodels
 
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.movieapp.data.Result
 import com.example.movieapp.data.movie.MovieResponse
 import com.example.movieapp.data.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +16,6 @@ class MovieViewModel @Inject constructor(
 
     init {
         getTopRatedMovies()
-        getUpcomingMovies()
     }
 
     fun getPopularMovies() = repository.getPopularMovies()
@@ -28,4 +25,10 @@ class MovieViewModel @Inject constructor(
     }
 
     fun getUpcomingMovies() = repository.getUpcomingMovies()
+
+    fun deleteMovie(result: Result) = viewModelScope.launch {
+        repository.delete(result)
+    }
+
+    fun getSavedMovies() = repository.getSavedMovies()
 }

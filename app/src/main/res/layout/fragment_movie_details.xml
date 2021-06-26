@@ -44,16 +44,13 @@
         <TextView
             android:id="@+id/tvRating"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
             android:text="8.1"
             android:textColor="@color/yellow"
-            android:textSize="20sp"
+            android:textSize="26sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/guideline3"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -63,16 +60,17 @@
             android:text="John Wick: Chapter 3"
             android:textColor="@color/white"
             android:textSize="26sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/tvRating"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_saved_foreground"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/guideline4"/>
+            android:id="@+id/ivSave"
+            android:layout_width="24dp"
+            android:layout_height="32dp"
+            android:src="@drawable/not_saved"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/rvGenres" />
 
         <TextView
             android:id="@+id/tvStory"

@@ -8,7 +8,7 @@
     tools:context=".ui.fragments.UpcomingFragment">
 
     <TextView
-        android:id="@+id/tvDiscovery"
+        android:id="@+id/tvUpcoming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_search_white"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDiscovery"
+        app:layout_constraintBottom_toBottomOf="@+id/tvUpcoming"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiscovery" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUpcoming" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineEnd"

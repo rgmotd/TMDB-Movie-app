@@ -47,7 +47,7 @@ class UpcomingFragment : Fragment() {
     private fun setupAdapters() {
         movieAdapter = MovieAdapter(false)
         movieAdapter.onItemClickCallback = {
-            findNavController().navigate(UpcomingFragmentDirections.actionUpcomingFragmentToMovieDetailsFragment(it))
+            findNavController().navigate(UpcomingFragmentDirections.actionUpcomingFragmentToMovieDetailsFragment(it.id))
         }
         binding.rvMoviesUpcoming.apply {
             adapter = movieAdapter

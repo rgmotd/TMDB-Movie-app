@@ -4,5 +4,5 @@ import dagger.assisted.AssistedFactory
 
 @AssistedFactory
 interface CastViewModelAssistedFactory {
-    fun create(id: Int): CastViewModel
+    fun create(id: Int): MovieDetailsViewModel
 }

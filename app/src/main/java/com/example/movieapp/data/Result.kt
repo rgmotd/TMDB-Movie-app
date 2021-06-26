@@ -11,7 +11,7 @@ data class Result(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val adult: Boolean,
-    val backdrop_path: String,
+    val backdrop_path: String?,
     val original_language: String,
     val original_title: String,
     val overview: String,
@@ -22,5 +22,6 @@ data class Result(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
-    val genre_ids: List<Int>
+    val genre_ids: List<Int>,
+    var is_saved: Boolean
 ) : Serializable

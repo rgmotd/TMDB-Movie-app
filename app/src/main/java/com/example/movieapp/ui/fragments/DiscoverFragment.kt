@@ -63,7 +63,7 @@ class DiscoverFragment : Fragment() {
         // Setup recyclerview
         movieAdapter = MovieAdapter(true)
         movieAdapter.onItemClickCallback = {
-            findNavController().navigate(DiscoverFragmentDirections.actionDiscoverFragmentToMovieDetailsFragment(it))
+            findNavController().navigate(DiscoverFragmentDirections.actionDiscoverFragmentToMovieDetailsFragment(it.id))
         }
         binding.rvMovies.apply {
             adapter = movieAdapter

@@ -2,7 +2,7 @@ package com.example.movieapp.data
 
 object Constants {
     const val API_KEY = "61b50326e867169b95fa59a05f43bbc4"
-    const val BASE_URL = "https://api.themoviedb.org"
+    const val BASE_URL = "https://api.themoviedb.org/3/"
 
     val GENRE_MAP = mapOf(
         28 to "Action",
