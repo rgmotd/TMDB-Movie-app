@@ -6,6 +6,7 @@ import androidx.paging.liveData
 import com.example.movieapp.api.MovieAPI
 import com.example.movieapp.data.Constants.API_KEY
 import com.example.movieapp.data.movie.MoviePagingSource
+import com.example.movieapp.data.movie.UpcomingMoviePagingSource
 import com.example.movieapp.db.MovieDatabase
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,7 +20,13 @@ class MovieRepository @Inject constructor(
         config = PagingConfig(pageSize = 18, enablePlaceholders = false),
         pagingSourceFactory = { MoviePagingSource(api) }).liveData
 
+    fun getUpcomingMovies() = Pager(
+        config = PagingConfig(pageSize = 18, enablePlaceholders = false),
+        pagingSourceFactory = { UpcomingMoviePagingSource(api) }).liveData
+
     suspend fun getTopRatedMovies() = api.getTopRatedMovies(API_KEY)
 
     suspend fun getMovieCast(id: Int) = api.getMovieCast(movie_id = id)
+
+
 }

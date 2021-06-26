@@ -25,6 +25,14 @@ interface MovieAPI {
         region: String = "US"
     ): Response<MovieResponse>
 
+    @GET("3/movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("api_key")
+        apiKey: String = API_KEY,
+        @Query("page")
+        page: Int
+    ): Response<MovieResponse>
+
     @GET("3/search/movie")
     suspend fun searchForMovies(
         @Query("api_key")

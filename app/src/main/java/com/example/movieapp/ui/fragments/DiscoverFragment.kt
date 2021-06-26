@@ -61,7 +61,7 @@ class DiscoverFragment : Fragment() {
 
     private fun setupAdapters() {
         // Setup recyclerview
-        movieAdapter = MovieAdapter()
+        movieAdapter = MovieAdapter(true)
         movieAdapter.onItemClickCallback = {
             findNavController().navigate(DiscoverFragmentDirections.actionDiscoverFragmentToMovieDetailsFragment(it))
         }

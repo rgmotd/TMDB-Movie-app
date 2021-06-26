@@ -18,6 +18,7 @@ class MovieViewModel @Inject constructor(
 
     init {
         getTopRatedMovies()
+        getUpcomingMovies()
     }
 
     fun getPopularMovies() = repository.getPopularMovies()
@@ -25,4 +26,6 @@ class MovieViewModel @Inject constructor(
     fun getTopRatedMovies() = viewModelScope.launch {
         topRatedMovies.postValue(repository.getTopRatedMovies().body())
     }
+
+    fun getUpcomingMovies() = repository.getUpcomingMovies()
 }
